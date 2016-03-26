@@ -61,17 +61,22 @@ class FeedlyClient(object):
         quest_url=self._get_endpoint('v3/subscriptions')
         res = requests.get(url=quest_url, headers=headers)
         return res.json()
-    
-    def get_feed_content(self,access_token,streamId,unreadOnly,newerThan):
-        '''return contents of a feed'''
-        headers = {'Authorization': 'OAuth '+access_token}
-        quest_url=self._get_endpoint('v3/streams/contents')
+
+    def get_feed_content(self, access_token, streamId, unreadOnly=True, newerThan=None):
+        '''return contents of a feed
+        :param newerThan:
+        :param unreadOnly:
+        :param streamId:
+        :param access_token:
+        '''
+        headers = {'Authorization': 'OAuth ' + access_token}
+        quest_url = self._get_endpoint('v3/streams/contents')
         params = dict(
-                      streamId=streamId,
-                      unreadOnly=unreadOnly,
-                      newerThan=newerThan
-                      )
-        res = requests.get(url=quest_url, params=params,headers=headers)
+            streamId=streamId,
+            unreadOnly=unreadOnly,
+            newerThan=newerThan
+        )
+        res = requests.get(url=quest_url, params=params, headers=headers)
         return res.json()
     
     def mark_article_read(self, access_token, entryIds):
