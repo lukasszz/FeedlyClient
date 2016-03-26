@@ -106,3 +106,11 @@ class FeedlyClient(object):
         if path is not None:
             url += "/%s" % path
         return url
+
+    def get_counts(self, access_token):
+        headers = {'content-type': 'application/json',
+                   'Authorization': 'OAuth ' + access_token
+                   }
+        url = self._get_endpoint('v3/markers/counts')
+        res = requests.get(url=url, headers=headers)
+        return res.json()
